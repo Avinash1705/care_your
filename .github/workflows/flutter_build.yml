@@ -112,3 +112,12 @@ jobs:
         with:
           name: ios-build
           path: build/ios
+
+      - name: Build IPA
+        run: flutter build ipa --no-codesign
+
+      - name: Upload IPA
+        uses: actions/upload-artifact@v4
+        with:
+            name: ios-ipa
+            path: build/ios/ipa/*.ipa
