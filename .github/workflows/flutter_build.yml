@@ -113,13 +113,20 @@ jobs:
 #          name: ios-build
 #          path: build/ios
 
-      - name: Build iOS IPA
+#      - name: Build iOS IPA
+#        run: |
+#          flutter build ipa --no-codesign
+#          ls build/ios/ipa
+#
+#      - name: Upload IPA
+#        uses: actions/upload-artifact@v4
+#        with:
+#          name: ios-ipa
+#          path: build/ios/ipa/*.ipa
+      - name: Export IPA
         run: |
-          flutter build ipa --no-codesign
-          ls build/ios/ipa
-
-      - name: Upload IPA
-        uses: actions/upload-artifact@v4
-        with:
-            name: ios-ipa
-            path: build/ios/ipa/*.ipa
+           mkdir -p build/ios/ipa
+           xcodebuild -exportArchive \
+             -archivePath build/ios/archive/Runner.xcarchive \
+             -exportPath build/ios/ipa \
+             -exportOptionsPlist ios/ExportOptions.plist
